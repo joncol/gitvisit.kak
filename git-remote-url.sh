@@ -29,10 +29,10 @@ if [ -f "$filename" ]; then
   rel_filename=$(realpath -s --relative-to="$(git rev-parse --show-toplevel)" "$filename")
 else # No filename supplied.
   if [[ $git_branch == "main" || $git_branch == "master" ]]; then
-    echo "$git_remote_url"
+    echo -n "$git_remote_url"
     exit 0
   else
-    echo "$git_remote_url/tree/$git_branch_in_url"
+    echo -n "$git_remote_url/tree/$git_branch_in_url"
     exit 0
   fi
 fi
@@ -64,7 +64,7 @@ else
 fi
 
 if command -v xsel &> /dev/null; then
-  xsel -ib <<< "$url"
+  echo -n "$url" | xsel -ib
 fi
 
-echo "$url"
+echo -n "$url"
